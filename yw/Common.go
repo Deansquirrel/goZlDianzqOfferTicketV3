@@ -162,7 +162,6 @@ func GetResponseCreateLittleTkt(ctx iris.Context, request *object.RequestCreateL
 	}()
 	//==================================================================================================================
 	//生成电子券系统流水号
-	//common.PrintOrLog("准备生成电子券系统流水号")
 	sno, err := GetSno("CT")
 	if err != nil {
 		response = GetResponseCreateLittleTktError(request, err, ctx.GetStatusCode())
