@@ -11,6 +11,7 @@ var PeiZhDbConn *sql.DB
 var Redis *go_tool.MyRedis
 var RabbitMQ *go_tool.MyRabbitMQ
 
+var HxDbConnConfigMap map[string][]string
 var HxDbConnMap map[string]*sql.DB
 
 var RedisDbId1 int

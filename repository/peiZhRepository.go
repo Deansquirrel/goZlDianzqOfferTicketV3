@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"github.com/Deansquirrel/goZlDianzqOfferTicketV3/common"
+	"github.com/Deansquirrel/goZlDianzqOfferTicketV3/global"
 )
 
 type PeiZhRepository struct {
@@ -84,8 +85,29 @@ func (pzR *PeiZhRepository) GetXtWxAppIdJoinInfo(conn *sql.DB, jPeiZh string, jK
 	}
 }
 
+func (pzR *PeiZhRepository) GetXtMappingDbConnInfo(appId string) ([]string, error) {
+	var configList []string
+	if global.HxDbConnConfigMap == nil {
+		global.HxDbConnConfigMap = make(map[string][]string)
+	}
+	if _, ok := global.HxDbConnConfigMap[appId]; ok {
+		configList = global.HxDbConnConfigMap[appId]
+	} else {
+		list, err := pzR.getXtMappingDbConnInfo(global.PeiZhDbConn, appId, "DB_TicketHx", "TicketHx")
+		if err != nil {
+			return nil, err
+		}
+		configList = make([]string, 0)
+		for _, item := range list {
+			configList = append(configList, item.MConnStr)
+		}
+		global.HxDbConnConfigMap[appId] = configList
+	}
+	return configList, nil
+}
+
 //从xtmappingdbconn获取连接信息
-func (pzR *PeiZhRepository) GetXtMappingDbConnInfo(conn *sql.DB, appId string, miKvName string, miIdType string) ([]dbConnInfo, error) {
+func (pzR *PeiZhRepository) getXtMappingDbConnInfo(conn *sql.DB, appId string, miKvName string, miIdType string) ([]dbConnInfo, error) {
 	stmt, err := conn.Prepare("" +
 		"select miid,mconnstr " +
 		"from xtmappingdbconn where appid = ? and miidtype = ? and mikvname = ?")

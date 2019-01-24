@@ -15,7 +15,6 @@ func main() {
 		return
 	}
 	global.SysConfig = config
-	fmt.Println(global.SysConfig.Total.IsDebug)
 	configStr, err := global.SysConfig.GetConfigStr()
 	if err != nil {
 		common.PrintOrLog(err.Error())
@@ -31,4 +30,5 @@ func main() {
 	common.PrintOrLog("程序启动")
 	defer common.PrintOrLog("程序退出")
 	//==================================================================================================================
+	yw.StartWebServer()
 }
