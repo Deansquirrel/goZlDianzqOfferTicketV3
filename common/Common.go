@@ -35,7 +35,7 @@ func GetSysConfig(fileName string) (*object.SysConfig, error) {
 		return nil, err
 	}
 	var config object.SysConfig
-	_, err = toml.DecodeFile(path+"\\"+fileName, &config)
+	_, err = toml.DecodeFile(path+"//"+fileName, &config)
 	if err != nil {
 		return nil, err
 	}
