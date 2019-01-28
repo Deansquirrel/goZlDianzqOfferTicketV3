@@ -168,7 +168,7 @@ func GetResponseCreateLittleTkt(ctx iris.Context, request *object.RequestCreateL
 		return
 	}
 	//==================================================================================================================
-	t := conftools.ConfTools{}
+	t := goZl.ConfTools{}
 	tktInfos := make([]object.TktInfo, 0)
 	tktReturnInfos := make([]object.TktReturnInfo, 0)
 	tktModels := make([]object.TktModel, 0)
